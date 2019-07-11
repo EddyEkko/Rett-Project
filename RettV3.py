@@ -76,6 +76,20 @@ print(ct_5)    #print(k + ' ' + str(v))
 print(ct_6)
 print(ct_7)
 
+'''plt.bar(range(len(GH)), GH.values(), align='center')
+plt.xticks(range(len(GH)), list(GH.keys()), rotation = 'vertical')
+
+figsize = plt.rcParams["figure.figsize"]
+print('Current size:',figsize)
+
+figsize[0] = 30
+figsize[1] = 30
+print('Current size:',figsize)
+plt.xlabel = 'Gene Names'
+plt.ylabel = 'Frequency of FOXO3 Motif'
+
+plt.show() ''' #the best graphing solution so far
+
 #print('Gene Name: ' + Title + ' ' + 'Number of Hits: ' + str(len(MoMouse)))
 
 #Try to get in order of frequency of hits.

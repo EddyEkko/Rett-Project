@@ -1,0 +1,70 @@
+import os, re
+import matplotlib.pyplot as plt
+
+TitleMotif = re.compile(r'(\w){1,}_1') #regular expression that can extract the gene titles from the sequence file
+FOXO3Motif = re.compile(r'TGTTT')
+MP = os.path.join('/','home','edward','canopy','scripts','Rett V2','MP.txt')
+Text = open(MP) # opens the sequence file as a file object
+Sequences = Text.read() # turns that file object into a readable script
+Genes = Sequences.split('>') # splits the script at every '>', creating a list where each object is a full, individual gene sequence (a chunk)
+
+for x in Genes: #gets rid of any newline characters that would confound future analysis
+    x.replace('\n','')    
+    
+GH =  {}
+
+for x in range(len(Genes)):
+    Label = TitleMotif.search(Genes[x])
+    if Label != None:
+        Title = Label.group() #looks in each chunk for the Gene ID, and assings that ID to Title.
+        MoMouse = FOXO3Motif.findall(Genes[x]) #searches each chunk for the motif and adds each hit to a tuple called MoMouse. len(MoMouse) = # of hits
+       # GeneHitDictionary.setdefault(Title,len(MoMouse)) #Adds each Title - # of hits combo to a dictionary
+        GH[Title] = len(MoMouse) # more efficient way, that preserves data even once the loop closes
+
+ct_0 = 0
+ct_1 = 0
+ct_2 = 0
+ct_3 = 0
+ct_4 = 0
+ct_5 = 0
+ct_6 = 0
+ct_7 = 0
+
+ct = {}
+
+for k,v in GH.items():
+    if v not in ct:
+        ct[v] = 0
+    if v in ct:
+        ct[v] += 1
+    if v == 22:
+        print(k)
+
+print(ct)
+       
+plt.bar(range(len(GH)), GH.values(), align='center')
+plt.xticks(range(len(GH)), list(GH.keys()), rotation = 'vertical')
+
+figsize = plt.rcParams["figure.figsize"]
+print('Current size:',figsize)
+
+figsize[0] = 30
+figsize[1] = 30
+print('Current size:',figsize)
+plt.xlabel = 'Gene Names'
+plt.ylabel = 'Frequency of FOXO3 Motif'
+
+plt.show() 
+
+© 2019 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
